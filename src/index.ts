@@ -264,6 +264,7 @@ export class TronLink extends Connector {
    * Initiates a connection.
    */
   public async activate(): Promise<void> {
+    throw new Error("Calling...");
     const cancelActivation = this.tronLink?.ready
       ? null
       : this.actions.startActivation();
