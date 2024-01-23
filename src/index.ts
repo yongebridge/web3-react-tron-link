@@ -153,7 +153,7 @@ export class TronLink extends Connector {
       websiteIcon: this.options?.websiteIcon,
     };
 
-    if (!tronLink.ready) return;
+    // if (!tronLink.ready) return;
 
     const provider = window.tronWeb;
 
