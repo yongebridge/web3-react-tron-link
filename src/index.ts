@@ -140,11 +140,16 @@ export class TronLink extends Connector {
    * Setup the provider and listen to its events.
    */
   private isomorphicInitialize() {
+    console.log("Calling isomorphicInitialize...");
+    console.log("CustomProvider data: ", this.customProvider);
     if (this.customProvider) return;
+    console.log("CustomProvider is undefined...");
 
     // Check if tron link is installed
     const tronLink = window?.tronLink;
+    console.log("tronLink data: ", tronLink);
     if (!tronLink) return;
+    console.log("tronLink available: ", tronLink);
 
     // Set options
     this.tronLink = tronLink;
@@ -152,14 +157,18 @@ export class TronLink extends Connector {
       websiteName: this.options?.websiteName,
       websiteIcon: this.options?.websiteIcon,
     };
+    console.log("tronLink with param: ", this.tronLink);
 
     // if (!tronLink.ready) return;
 
     const provider = window.tronWeb;
+    console.log("Tron web with provider: ", provider);
 
     if (!provider) return;
+    console.log("Provider available");
 
     this.customProvider = provider;
+    console.log("this.customProvider added from tronweb: ", this.customProvider);
 
     const callbacks = (event: {
       data: {
@@ -224,8 +233,11 @@ export class TronLink extends Connector {
   public async connectEagerly(): Promise<void> {
     const cancelActivation = this.actions.startActivation();
 
+    console.log("Calling isomorphicInitialize called...");
     this.isomorphicInitialize();
+    console.log("After isomorphicInitialize called...");
 
+    console.log("After isomorphicInitialize this.customProvider: ", this.customProvider);
     if (!this.customProvider) cancelActivation();
 
     try {
@@ -263,10 +275,14 @@ export class TronLink extends Connector {
       ? null
       : this.actions.startActivation();
 
+    console.log("activate: Calling isomorphicInitialize.");
     this.isomorphicInitialize();
+    console.log("activate: After isomorphicInitialize: ", this.customProvider);
 
+    console.log("activate: this.tronLink: ", this.tronLink);
     if (!this.tronLink) throw new NoTronProviderError();
 
+    console.log("activate: this.customProvider: ", this.customProvider);
     if (!this.customProvider) {
       cancelActivation?.();
       throw new Error("Unlock Wallet");
