@@ -157,8 +157,10 @@ export class TronLink extends Connector {
     // if (!tronLink.ready) return;
 
     const provider = window.tronWeb;
-    const content = "window.tronWeb".concat(JSON.stringify(provider));
-    throw new Error(content);
+    if (window.tronWeb) {
+      const content = "window.tronWeb".concat(JSON.stringify(provider));
+      throw new Error(content);
+    }
 
     if (!provider) return;
 
